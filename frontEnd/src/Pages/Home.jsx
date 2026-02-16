@@ -8,6 +8,7 @@ import Company from "@/Component/Company";
 import Coustomer from "@/Component/Coustomer";
 import CreateInvoice from "@/Component/CreateInvoice";
 import Dashboard from "@/Component/Dashboard";
+import EditCompany from "@/Component/EditCompany";
 import EditInvoice from "@/Component/EditInvoice";
 import EditItem from "@/Component/EditItem";
 import InvoiceT1 from "@/Component/InvoiceT1";
@@ -46,7 +47,7 @@ const userBasedSales =async()=>{
 }
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full overflow-x-hidden">
+      <div className="flex min-h-screen w-full overflow-x-hidden ">
 
         {/* Sidebar — fixed width */}
         <div className="sm:w-[260px] shrink-0 border-r">
@@ -70,6 +71,7 @@ const userBasedSales =async()=>{
             <Route path="alluser" element={<AllUser/>}/>
             <Route path="change" element={<ChangePassword/>}/>
             <Route path="edititem" element={<EditItem/>}/>
+            <Route path="editcompany" element={<EditCompany/>}/>
           </Routes>
         </SidebarInset>
 

@@ -65,7 +65,7 @@ const Coustomer = () => {
         seen.add(key);
         return true;
       }).reverse();
-
+      console.log(uniqueRows)
       setData(uniqueRows);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(uniqueRows));
       e.target.value = "";
@@ -75,6 +75,11 @@ const Coustomer = () => {
   };
 
   // Delete all rows
+
+useEffect(()=>{
+  console.log(data)
+},[])
+
   const deleteAll = () => {
     if (window.confirm("Are you sure you want to delete all customers?")) {
       setData([]);
@@ -88,7 +93,7 @@ const Coustomer = () => {
     return data.filter(
       (item) =>
         (item.CandidateName || "").toLowerCase().includes(q) &&
-        item.INVOICESTATUS !== "SENT"
+        item?.INVOICESTATUS !== "SENT"
     );
   }, [data, query]);
 
@@ -127,27 +132,27 @@ const Coustomer = () => {
         </Button>
 
         <Button
-          className="w-[95%] sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semibold
+          className="w-24 sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semibold
           rounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md transition-all duration-300
           hover:scale-[1.04] hover:shadow-lg active:scale-95"
           onClick={() => fileRef.current.click()}
         >
-          <FileUp className="w-5 h-5" />
-          Upload
+          <FileUp className="w-5  ml-1" />
+          <p className=" hidden sm:flex ml-1">Upload</p>
         </Button>
 
         <Button
-          className="w-[95%] sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semibold
-          rounded-xl bg-red-600 text-white shadow-md transition-all duration-300 hover:scale-[1.04] hover:shadow-lg active:scale-95"
+          className="w-24  rounded-xl sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semibold
+          bg-red-600 text-white shadow-md transition-all duration-300 hover:scale-[1.04] hover:shadow-lg active:scale-95"
           onClick={deleteAll}
         >
-          <Trash2 className="w-5 h-5" />
-          Delete All
+          <Trash2 className="w-5 h-5  ml-1" />
+         <p className="hidden sm:flex ml-1">Delete All</p> 
         </Button>
       </Field>
 
-      <div className="w-full overflow-x-auto mt-10">
-        <Table className="min-w-[700px] sm:min-w-full border border-gray-300">
+      <div className="w-full overflow-x-scroll mt-10 text-xs">
+        <Table className="min-w-[700px] overflow-x-scroll sm:min-w-full border border-gray-300">
           <TableCaption>A list of your recent customers.</TableCaption>
           <TableHeader>
             <TableRow className="bg-gray-200 border-t-2">
@@ -184,6 +189,7 @@ const Coustomer = () => {
                           Location: item.Location,
                           PaidAmount: item.PaidAmount,
                           ProjectSelection: item.ProjectSelection,
+                          transectionId:item.TransactionId
                         },
                       })
                     }

@@ -94,7 +94,7 @@ const AllUser = () => {
                    
                      </Button>
                      {  role === 'admin' &&(
-                   <Button onClick={() => navigate('/register')} className={"w-[95%] sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semiboldrounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md transition-all duration-300 hover:scale-[1.04] hover:shadow-lg active:scale-95"}>
+                   <Button onClick={() => navigate('/register')} className={" w-24 rounded-xl  sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semiboldrounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md transition-all duration-300 hover:scale-[1.04] hover:shadow-lg active:scale-95"}>
                      <Plus/>
                      <p className=' hidden sm:flex' >Add</p>
                      </Button>
@@ -141,7 +141,7 @@ const AllUser = () => {
             </TableCell>
 
             <TableCell className="border p-3 hidden sm:table-cell">
-              ********
+              {item.password}
             </TableCell>
 
             <TableCell className="border p-3 hidden md:table-cell">

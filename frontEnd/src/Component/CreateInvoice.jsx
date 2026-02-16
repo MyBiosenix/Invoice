@@ -136,6 +136,7 @@ const CreateInvoice = () => {
           setClientphone(state? state.MobileNumber:clientPhone )
           setClientAddress(state? state.Location : clientAddress)
           setAmountReceive(state? state.PaidAmount: amountReceive)
+          setTransectionId(state? state?.transectionId: transectionId)
         if (sItem?.length > 0) {
   const total = sItem.reduce(
     (sum, i) => sum + Number(i.Amount),
@@ -152,6 +153,10 @@ const CreateInvoice = () => {
     const handleSubmit=async()=>{
       try{
         console.log(sItem)
+
+        if( !date || !clientName || !clientEmail || !clientAddress || !clientPhone || !totalAmount || !amountReceive || !transectionId  ){
+          return toast.error('all field required')
+        }
 const response = await axios.post(
   `${backendUrl}/createinvoice`,
   { invoiceNumber,
@@ -183,6 +188,7 @@ const response = await axios.post(
 console.log(response)
 if(response.data.success === true){
   toast.success('Invoice added successfully')
+ 
 
 }
       }
@@ -218,13 +224,13 @@ if(response.data.success === true){
             {/* name  */}
         <div className=' flex  flex-col gap-3 px-3'>
           <Label className=' text-base font-medium text-left'>Name</Label>
-          <Input  type="text" placeholder='mishra ' value={clientName}  onChange={(e)=>{setClientName(e.target.value)}} className={` w-[90%] sm:w-[30vw] rounded-lg`}/>
+          <Input  type="text" placeholder='mishra ' value={clientName}  onChange={(e)=>{setClientName(e.target.value)}} className={` w-[90%] sm:w-[30vw] rounded-lg ${!clientName ? 'ring-1 ring-red-500':''}`}/>
         </div>
 
           {/* email */}
            <div className=' flex  flex-col gap-3 px-3'>
           <Label className=' text-base font-medium'>Email</Label>
-          <Input  type="text" placeholder='user@gmail.com ' value={clientEmail} onChange={(e)=>{setClientEmail(e.target.value)}} className={` w-[90%] sm:w-[30vw] rounded-lg`}/>
+          <Input  type="text" placeholder='user@gmail.com ' value={clientEmail} onChange={(e)=>{setClientEmail(e.target.value)}} className={` w-[90%] sm:w-[30vw] rounded-lg ${!clientEmail ?'ring-1 ring-red-500':''}`}/>
         </div>
          </div>
          
@@ -235,13 +241,13 @@ if(response.data.success === true){
             {/* contact  */}
         <div className=' flex  flex-col gap-3 px-3'>
           <Label className=' text-base font-medium text-left'>Contact </Label>
-          <Input  type="text" placeholder='+912345678901 ' value={clientPhone} onChange={(e)=>{setClientphone(e.target.value)}} className={` w-[90%] sm:w-[30vw] rounded-lg`}/>
+          <Input  type="text" placeholder='+912345678901 ' value={clientPhone} onChange={(e)=>{setClientphone(e.target.value)}} className={` w-[90%] sm:w-[30vw] rounded-lg ${!clientPhone ? 'ring-1 ring-red-700':''}`}/>
         </div>
 
           {/* address */}
            <div className=' flex  flex-col gap-3 px-3'>
           <Label className=' text-base font-medium'>Address</Label>
-          <Textarea  type="text" placeholder=' ' className={` w-[90%] sm:w-[30vw] rounded-lg`}  value={clientAddress} onChange={(e)=>{setClientAddress(e.target.value)}}/>
+          <Textarea  type="text" placeholder=' ' className={` w-[90%] sm:w-[30vw] rounded-lg ${!clientAddress ? 'ring-1 ring-red-600': ''}`}  value={clientAddress} onChange={(e)=>{setClientAddress(e.target.value)}}/>
         </div>
          </div>
 
@@ -353,7 +359,7 @@ if(response.data.success === true){
 <div className=' mt-10 w-full flex flex-col sm:flex-row gap-8 '>
     <div className=' flex flex-col'>
         <Label>Total Amount</Label>
-        <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg`} placeholder='₹' value={totalAmount} onChange={(e) => {
+        <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg ${!totalAmount ?'ring-1 ring-red-600':''}`} placeholder='₹' value={totalAmount} onChange={(e) => {
    
     setTotalAmount(Number(e.target.value));
 
@@ -364,7 +370,7 @@ if(response.data.success === true){
    
     <div className=' flex flex-col'>
         <Label> Amount Received</Label>
-        <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg`} placeholder='₹' value={amountReceive} onChange={(e)=>{setAmountReceive(e.target.value)}}/>
+        <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg ${!amountReceive ? 'ring-1 ring-red-600':''}`} placeholder='₹' value={amountReceive} onChange={(e)=>{setAmountReceive(e.target.value)}}/>
     </div>
 
 

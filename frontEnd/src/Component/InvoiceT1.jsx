@@ -14,6 +14,7 @@ import axios from 'axios';
 import { InvoiceContext } from '@/Context/InvoiceContext';
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from 'react-toastify';
+import { assets } from '@/assets/assets';
 const InvoiceT1 = () => {
   const printRef = useRef();
   const {backendUrl,token, business}=useContext(InvoiceContext)
@@ -22,7 +23,7 @@ const InvoiceT1 = () => {
 //--------------------- business -----------------
 
 useEffect(()=>{
-    console.log(business)
+    console.log(state)
 },[])
 
   const{state}=useLocation()
@@ -68,7 +69,7 @@ useEffect(()=>{
 
   const formData=new FormData()
   formData.append('invoice',blob,"invoice.pdf")
-  formData.append('companyName',business.companyName)
+  formData.append('companyName',state.companyName)
   formData.append('email',state.clientEmail)
   console.log(state.clientEmail)
   formData.append('name',state.clientName)
@@ -144,13 +145,23 @@ useEffect(()=>{
         style={{ maxWidth: 800, width: "100%" }}
       >
         {/* HEADER */}
-        <div className="flex justify-between items-center border-b-2 border-blue-100 pb-3 mb-3">
-            <div className='  flex flex-row items-center gap-3'>
-                <img src={state?.imageUrl} alt="" className=' w-10 h-10' />
-            <h3 className="text-xl font-bold text-gray-700">{state?.companyName}</h3>
+       
+        
+        <div className="flex justify-between items-start border-b-2 border-blue-100 pb-3 mb-3">
+            <div className=' flex flex-row gap-1'>
+            <h1 className=' text-xl font-extrabold text-slate-900 uppercase'>{state.companyName}</h1>
+            <p className=' text-xl font-extrabold text-slate-900 uppercase'>
+
+              {['octagate','acework','inquiniti'].includes(state.companyName.toLowerCase())
+  ? 'technologies'
+  : ['sure step','tenr global','isimple'].includes(state.companyName.toLowerCase())
+  ? 'solutions'
+  : 'labs'}
+
+            </p>
             </div>
+        <h1 className=" text-3xl font-extrabold text-blue-600 ">INVOICE</h1>
           
-          <h1 className="text-3xl font-extrabold text-blue-600">INVOICE</h1>
         </div>
 
         {/* INVOICE INFO */}
@@ -244,7 +255,7 @@ useEffect(()=>{
                 <TableCell className="border px-2 py-2 text-right font-medium">{state?.amountReceive}</TableCell>
               </TableRow>
 
-
+            {i.Amount - state?.amountReceive !=0 &&(
              <TableRow className="bg-gray-50">
   <TableCell colSpan={6} className="p-0">
     <div className="flex justify-between px-3 w-full">
@@ -260,7 +271,9 @@ useEffect(()=>{
       </div>
 
       {/* RIGHT SIDE */}
+      
       <div className="flex">
+
         <div className="border px-2 py-2 text-right font-semibold">
           Balance Due
         </div>
@@ -272,7 +285,8 @@ useEffect(()=>{
     </div>
   </TableCell>
 </TableRow>
-
+            )
+}
             </TableFooter>
           </Table>
         </div>

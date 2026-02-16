@@ -30,6 +30,7 @@ const EditItem = () => {
             console.log(response.data.success)
             if(response.data.success === true){
                 toast.success(response.data.msg)
+                Navigate('/company/')
             }
         }
         catch(e){

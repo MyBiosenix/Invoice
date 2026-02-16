@@ -20,19 +20,24 @@ import { toast } from 'react-toastify'
 // import 'react-circular-progressbar/dist/styles.css';
 
 import Item from './Item'
+import { useLocation } from 'react-router-dom'
 const AllInvoices = () => {
     const[query,setQuery]=useState('')
    
-    const{backendUrl,token, navigate, role, userPermission}=useContext(InvoiceContext)
+    const{backendUrl,token, navigate, role, userPermission, business}=useContext(InvoiceContext)
 
-
+    const{state}=useLocation()
     //------------------getting invoice---------------------
     const[invoice,setInvoice]=useState([])
+
+    useEffect(()=>{
+      console.log(state)
+    },[state])
     const getInvoice=async()=>{
             try{
               if(role !=='admin' && userPermission !=='edit' ){
                 console.log('hii')
-              const response= await axios.get(`${backendUrl}/getinvoice`,{headers:{token}})
+              const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
                 console.log(response.data)
                 setInvoice(response.data.invoice) 
               }
@@ -47,7 +52,7 @@ const AllInvoices = () => {
 
             if(role ==='admin' || userPermission === 'edit'){
               console.log('hii')
-           const response= await axios.get(`${backendUrl}/allinvoice`,{headers:{token}})
+           const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
                 console.log(response)
                  setInvoice(response.data.invoice) 
             }
@@ -144,7 +149,7 @@ const AllInvoices = () => {
        
          </Button>
          {  userPermission === 'edit' &&(
-       <Button onClick={()=>{navigate('/home/createinvoice')}} className={"w-[95%] sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semiboldrounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md transition-all duration-300 hover:scale-[1.04] hover:shadow-lg active:scale-95"}>
+       <Button onClick={()=>{navigate('/home/createinvoice')}} className={" w-24 rounded-xl sm:w-36 h-11 flex items-center justify-center gap-2 text-base font-semiboldrounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md transition-all duration-300 hover:scale-[1.04] hover:shadow-lg active:scale-95"}>
          <Plus/>
          <p className=' hidden sm:flex' >Add</p>
          </Button>
@@ -193,11 +198,11 @@ const AllInvoices = () => {
       </Table>
             </div> */}
 
-      <div className='w-full mt-10 px-2'>
-  <div className='w-full overflow-x-auto rounded-lg border border-gray-300 shadow-sm'>
+      <div className='w-full mt-10 px-1'>
+  <div className='w-full  rounded-lg border border-gray-300 shadow-sm'>
     
-    <Table className="min-w-[900px] uppercase border-collapse">
-      <TableCaption className="py-3">
+    <Table className=" min-w-[800px] uppercase border-collapse text-xs overflow-x-scroll ">
+      <TableCaption className="py-3 ">
         A list of your recent items.
       </TableCaption>
 
@@ -218,33 +223,33 @@ const AllInvoices = () => {
           <TableRow key={i._id || index} className="hover:bg-gray-50 transition">
             
             {/* Serial Number */}
-            <TableCell className="border border-gray-300 text-center px-4 py-3 font-semibold">
+            <TableCell className="border border-gray-300 text-center py-3 font-semibold">
               {index + 1}
             </TableCell>
 
-            <TableCell className="border border-gray-300 text-center px-4 py-3 whitespace-nowrap">
+            <TableCell className="border border-gray-300 text-center py-3 whitespace-nowrap">
               {i.clientName}
             </TableCell>
 
-            <TableCell className="border border-gray-300 text-center px-4 py-3 break-words">
+            <TableCell className="border border-gray-300 text-center  py-3 break-words">
               {i.clientEmail}
             </TableCell>
 
-            <TableCell className="border border-gray-300 text-center px-4 py-3 break-words">
+            <TableCell className="border border-gray-300 text-center  py-3 break-words">
               {i.clientAddress}
             </TableCell>
 
-            <TableCell className="border border-gray-300 text-center px-4 py-3">
+            <TableCell className="border border-gray-300 text-center  py-3">
               {i.state}
             </TableCell>
 
-             <TableCell className="border border-gray-300 text-center px-4 py-3">
+             <TableCell className="border border-gray-300 text-center  py-3">
               {i.companyName}
             </TableCell>
 
 
             <TableCell className="border border-gray-300 px-4 py-3">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <div className="flex  sm:flex-row items-center justify-center gap-3">
                 
                 <Eye
                   className="cursor-pointer text-blue-500 hover:scale-110 transition"

@@ -41,7 +41,7 @@ const AddCompany = () => {
         try{
           
           if(!image || !companyName || !email || !address || !phoneNumber ){
-            toast.error("all field required")
+            return toast.error("all field required")
           }
           setLoading(true)
             const response=await axios.post(`${backendUrl}/addcompany`,formData,{headers:{token}})

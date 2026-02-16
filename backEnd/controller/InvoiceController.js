@@ -58,6 +58,154 @@ export const sendMail=async(req,res)=>{
         // console.log(invoice)
         // console.log(companyName)
 
+
+        if(companyName === 'acewok'){
+          const trap=nodemailer.createTransport({      
+            host: "smtp.gmail.com",
+            service:"gmail",
+            auth: {
+              type: "login", // default
+              user: process.env.BILLS, 
+              pass: process.env.BILLS_PASSWORD
+            }
+          });
+
+
+          await trap.sendMail({
+            from: process.env.BILLS,
+            to: `${email}`,
+            subject: "📄 Your  invoice",
+            html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+      <style>
+        @media only screen and (max-width: 600px) {
+          .wrapper {
+            padding: 16px !important;
+          }
+          .container {
+            border-radius: 0 !important;
+          }
+          h2 {
+            font-size: 18px !important;
+          }
+          p {
+            font-size: 14px !important;
+          }
+          .accept-box {
+            font-size: 14px !important;
+            padding: 14px !important;
+          }
+        }
+      </style>
+      </head>
+      
+      <body style="margin:0; padding:0; background-color:#f4f6f8; font-family:Arial, Helvetica, sans-serif;">
+      
+      <div class="wrapper" style="padding:30px;">
+        <div class="container" style="
+          width:100%;
+          max-width:600px;
+          margin:0 auto;
+          background:#ffffff;
+          border-radius:8px;
+          overflow:hidden;
+          box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        ">
+      
+          <!-- Header -->
+          <div style="background-color:#0f172a; color:#ffffff; padding:20px 24px;">
+            <h2 style="margin:0; font-size:22px; line-height:1.3;">
+              Welcome to ${companyName}
+            </h2>
+          </div>
+      
+          <!-- Body -->
+          <div style="padding:24px; color:#333333; line-height:1.6; font-size:15px;">
+            <p style="margin:0 0 16px 0;">Dear Valued Client,</p>
+      
+            <p style="margin:0 0 16px 0;">
+              Warm greetings and a heartfelt welcome to the <strong>${companyName}</strong>.
+            </p>
+      
+            <p style="margin:0 0 16px 0;">
+              Please find your <strong>invoice attached</strong> with this email for your reference and records.
+            </p>
+      
+            <p style="margin:0 0 16px 0;">
+              We kindly request you to review the invoice and share a formal acceptance by replying with the statement below:
+            </p>
+      
+            <div class="accept-box" style="
+              background-color:#f1f5f9;
+              border-left:4px solid #2563eb;
+              padding:15px;
+              margin:20px 0;
+              font-weight:bold;
+              color:#1e3a8a;
+              font-size:15px;
+              line-height:1.5;
+            ">
+              “I ACCEPT FOLLOWING TERMS & CONDITIONS”
+            </div>
+      
+            <p style="margin:0 0 16px 0;">
+              Your confirmation will help us proceed further with the agreement and service activation.
+            </p>
+      
+            <p style="margin:0 0 16px 0;">
+              Should you have any questions or require clarification, please feel free to reach out to us.
+            </p>
+      
+            <p style="margin:24px 0 0 0;">
+              Thank you for choosing <strong>${companyName}</strong>.
+            </p>
+      
+            <p style="margin:16px 0 0 0;">
+              Best Regards,<br />
+              <strong>${companyName}</strong><br />
+              <span style="color:#555;">Support & Billing Team</span>
+            </p>
+          </div>
+      
+          <!-- Footer -->
+          <div style="
+            background-color:#f8fafc;
+            text-align:center;
+            padding:14px;
+            font-size:12px;
+            color:#777;
+          ">
+            © 2026 ${companyName}. All rights reserved.
+          </div>
+      
+        </div>
+      </div>
+      
+      </body>
+      </html>
+      `
+      ,
+            attachments:[
+              {
+                  filename:'invoice.pdf',
+                  path:invoice
+              }
+            ]
+          });
+
+
+          console.log(process.env.INQUINITI_EMAIL)
+          console.log(process.env.INQUINITI_PASSWORD)
+  return res.json({success:true,msg:"invoice send successfully"})
+
+
+        }
+
         if(companyName === 'inquiniti'){
            
 
@@ -205,7 +353,7 @@ export const sendMail=async(req,res)=>{
 
         //------------------- mail to --------------
 
-        else if(companyName === 'tenrglobalsolution'){
+        else if(companyName === 'tenr global'){
               const trap=nodemailer.createTransport({      
                 host: "smtp.gmail.com",
                 service:"gmail",
@@ -292,7 +440,7 @@ export const sendMail=async(req,res)=>{
             return res.json({success:true, msg:"email send successfully"})
         }
 
-        else if(companyName === 'surestepsolutions'){
+        else if(companyName === 'sure step'){
             console.log(process.env.SURESTEPSOLUTIONS_EMAIL)
             console.log(process.env.SURESTEPSOLUTIONS_PASSWORD)
 
@@ -381,7 +529,7 @@ export const sendMail=async(req,res)=>{
     return res.json({success:true, msg:"email send successfully"})
         }
 
-        else if(companyName === 'isimplesolutions'){
+        else if(companyName === 'isimple'){
             console.log(process.env.ISIMPLESOLUTIONS_EMAIL)
             console.log(process.env.ISIMPLESOLUTIONS_PASSWORD)
 
@@ -468,7 +616,7 @@ export const sendMail=async(req,res)=>{
     return res.json({success:true,msg:"email send successfully"})
         }
 
-        else if(companyName === 'aviolivtechnologies'){
+        else if(companyName === 'avioliv'){
             console.log(process.env.AVIOLIVTECHNOLOGIES_EMAIL)
             console.log(process.env.AVIOLIVTECHNOLOGIES_PASSWORD)
 
@@ -555,7 +703,7 @@ export const sendMail=async(req,res)=>{
     return res.json({success:true,msg:"email send "})
         }
 
-        else if(companyName === 'tech2shinelabs'){
+        else if(companyName === 'tech2shine'){
             console.log(process.env.TECH2SHINELABS_EMAIL)
             console.log(process.env.TECH2SHINELABS_PASSWORD)
 
@@ -839,6 +987,146 @@ export const sendMail=async(req,res)=>{
     return res.json({success:true, msg:"email send "})
         }
 
+        else if(companyName === 'techiq'){
+            console.log('techiqlabs')
+          const trap=nodemailer.createTransport({      
+            host: "smtp.gmail.com",
+            service:"gmail",
+            auth: {
+              type: "login", // default
+              user: process.env.TECHIQLABS_EMAIL, 
+              pass: process.env.TECHIQLABS_PASSWORD
+            }
+          });
+
+          await trap.sendMail({
+            from: process.env.TECHIQLABS_EMAIL,
+            to: `${email}`,
+            subject: "📄 Your  invoice",
+            html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+      <style>
+        @media only screen and (max-width: 600px) {
+          .wrapper {
+            padding: 16px !important;
+          }
+          .container {
+            border-radius: 0 !important;
+          }
+          h2 {
+            font-size: 18px !important;
+          }
+          p {
+            font-size: 14px !important;
+          }
+          .accept-box {
+            font-size: 14px !important;
+            padding: 14px !important;
+          }
+        }
+      </style>
+      </head>
+      
+      <body style="margin:0; padding:0; background-color:#f4f6f8; font-family:Arial, Helvetica, sans-serif;">
+      
+      <div class="wrapper" style="padding:30px;">
+        <div class="container" style="
+          width:100%;
+          max-width:600px;
+          margin:0 auto;
+          background:#ffffff;
+          border-radius:8px;
+          overflow:hidden;
+          box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        ">
+      
+          <!-- Header -->
+          <div style="background-color:#0f172a; color:#ffffff; padding:20px 24px;">
+            <h2 style="margin:0; font-size:22px; line-height:1.3;">
+              Welcome to ${companyName}
+            </h2>
+          </div>
+      
+          <!-- Body -->
+          <div style="padding:24px; color:#333333; line-height:1.6; font-size:15px;">
+            <p style="margin:0 0 16px 0;">Dear Valued Client,</p>
+      
+            <p style="margin:0 0 16px 0;">
+              Warm greetings and a heartfelt welcome to the <strong>${companyName}</strong>.
+            </p>
+      
+            <p style="margin:0 0 16px 0;">
+              Please find your <strong>invoice attached</strong> with this email for your reference and records.
+            </p>
+      
+            <p style="margin:0 0 16px 0;">
+              We kindly request you to review the invoice and share a formal acceptance by replying with the statement below:
+            </p>
+      
+            <div class="accept-box" style="
+              background-color:#f1f5f9;
+              border-left:4px solid #2563eb;
+              padding:15px;
+              margin:20px 0;
+              font-weight:bold;
+              color:#1e3a8a;
+              font-size:15px;
+              line-height:1.5;
+            ">
+              “I ACCEPT FOLLOWING TERMS & CONDITIONS”
+            </div>
+      
+            <p style="margin:0 0 16px 0;">
+              Your confirmation will help us proceed further with the agreement and service activation.
+            </p>
+      
+            <p style="margin:0 0 16px 0;">
+              Should you have any questions or require clarification, please feel free to reach out to us.
+            </p>
+      
+            <p style="margin:24px 0 0 0;">
+              Thank you for choosing <strong>${companyName}</strong>.
+            </p>
+      
+            <p style="margin:16px 0 0 0;">
+              Best Regards,<br />
+              <strong>${companyName}</strong><br />
+              <span style="color:#555;">Support & Billing Team</span>
+            </p>
+          </div>
+      
+          <!-- Footer -->
+          <div style="
+            background-color:#f8fafc;
+            text-align:center;
+            padding:14px;
+            font-size:12px;
+            color:#777;
+          ">
+            © 2026 ${companyName}. All rights reserved.
+          </div>
+      
+        </div>
+      </div>
+      
+      </body>
+      </html>
+      `,
+            attachments:[
+              {
+                  filename:'invoice.pdf',
+                  path:invoice
+              }
+            ]
+          });
+          
+          return res.json({success:true, msg:"email send "})
+        }
         else{
             console.log("no email found ")
             res.json({success:false,error:'no company email found '})
@@ -880,6 +1168,22 @@ export const allInvoice=async(req,res)=>{
   }
 }
 
+
+
+//get invoice my company name 
+export const invoiceByCompanyName=async(req,res)=>{
+  try{
+    const companyName=req.params.companyName
+    console.log(companyName)
+    const invoice =await InvoiceModel.find({companyName:companyName}).sort({_id:-1})
+    console.log(invoice)
+    res.json({success:true,invoice})
+    console.log(invoice)
+  }
+  catch(e){
+res.json({success:true,error:e.message})
+  }
+}
 
 // delete all invoice 
 

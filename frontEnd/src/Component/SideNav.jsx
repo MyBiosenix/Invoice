@@ -44,7 +44,7 @@ const SideNavInner = () => {
     ? [{ name: "Items", icon: Handbag, key: "items", href:'/home/item' }]
     : []),
     {name:"Company", icon: Package, key:"package", href:'/home/company'},
-    {name:"All Invoice", icon: Notebook, key:"allinvoice", href:'/home/allinvoice'},
+    // {name:"All Invoice", icon: Notebook, key:"allinvoice", href:'/home/allinvoice'},
    ...(role === "admin"
     ? [{ name: "All User", icon: User2Icon, key: "allUser", href: "/home/allUser" }]
     : [])

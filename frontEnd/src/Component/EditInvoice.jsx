@@ -45,6 +45,7 @@ try{
     console.log('Updated Invoice:', formData)
     if(response.data.success ===true){
       toast.success(response.data.msg)
+      navigate('/home/allinvoice')
     }
 }
 catch(e){
