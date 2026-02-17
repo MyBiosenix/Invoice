@@ -17,7 +17,7 @@ const EditItem = () => {
     const[Amount,setAmount]=useState(0)
 
     //context
-    const{token,backendUrl,role,userPermission}=useContext(InvoiceContext)
+    const{token,backendUrl,role,userPermission,navigate}=useContext(InvoiceContext)
     const{state}=useLocation()
 
     useEffect(()=>{
@@ -30,7 +30,7 @@ const EditItem = () => {
             console.log(response.data.success)
             if(response.data.success === true){
                 toast.success(response.data.msg)
-                Navigate('/company/')
+                navigate('home/item')
             }
         }
         catch(e){

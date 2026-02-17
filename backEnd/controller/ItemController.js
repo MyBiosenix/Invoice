@@ -74,7 +74,7 @@ export const createItem=async(req,res)=>{
      if(softwareName !==''){
        item.softwareName=softwareName
      }
-     if(Amount !==''){
+     if(Amount >0){
        item.Amount=Amount
      }
      if(des !==''){
