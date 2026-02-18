@@ -1157,11 +1157,24 @@ export const getinvoice=async(req,res)=>{
 
 
 // get all invoice 
-export const allInvoice=async(req,res)=>{
+export const allInvoiceState=async(req,res)=>{
   try{
     const state=req.params.state
     console.log(state)
       const invoice=await InvoiceModel.find({state:state}).sort({_id:-1})
+      // console.log(invoice)
+      res.json({success:true,invoice})
+  }
+  catch(e){
+    res.json({success:false,error:e.message})
+  }
+}
+
+export const allInvoice=async(req,res)=>{
+  try{
+    
+  
+      const invoice=await InvoiceModel.find().sort({_id:-1})
       // console.log(invoice)
       res.json({success:true,invoice})
   }

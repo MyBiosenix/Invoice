@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import Graph from './Graph'
 import PeiChart from './PeiChart'
+import { toast } from 'react-toastify'
 
 
 //------------------- c hart import and register 
@@ -18,6 +19,10 @@ const Dashboard = () => {
   useEffect(()=>{
     console.log(userPermission)
   },[userPermission])
+
+  useEffect(()=>{
+if(!token)return navigate('/')
+  },[token])
 
 
     //------------------getting invoice---------------------

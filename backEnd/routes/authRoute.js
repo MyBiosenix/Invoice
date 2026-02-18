@@ -4,7 +4,7 @@ import { AuthUser } from "../middlewere/Auth.js";
 import {  createItem, deleteItem, EditItem, getAllItem } from "../controller/ItemController.js";
 import { upload } from "../middlewere/multer.js";
 import { addCompany, editCompany, getCompany, stateSpecificCompany } from "../controller/CompanyController.js";
-import { allInvoice, allUserSales, companySales, createInvoice, deleteInvoice, EditInvoice, getAllDailySales, getDailySales, getinvoice, invoiceByCompanyName, sendMail } from "../controller/InvoiceController.js";
+import { allInvoice, allInvoiceState, allUserSales, companySales, createInvoice, deleteInvoice, EditInvoice, getAllDailySales, getDailySales, getinvoice, invoiceByCompanyName, sendMail } from "../controller/InvoiceController.js";
 import { AuthAdmin } from "../middlewere/Admin.js";
 
 export const authRouter=express.Router()
@@ -39,8 +39,9 @@ authRouter.put('/changepassword',AuthAdmin,changePassword)
 authRouter.delete('/delete/:id',AuthAdmin,passwordDelete)
 
 // ----------------- all invoice
-authRouter.get('/allinvoice/:state',AuthUser,allInvoice)
+authRouter.get('/allinvoice/',AuthUser,allInvoice)
 
+authRouter.get('/allinvoicestate/:state',AuthUser,allInvoiceState)
 // ----------------- delete invoice
 authRouter.delete('/deleteinvoice/:id',AuthAdmin,deleteInvoice)
 

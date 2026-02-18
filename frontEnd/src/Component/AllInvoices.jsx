@@ -77,7 +77,7 @@ const AllInvoices = () => {
       try{
         if(InvoiceState){
           console.log("yes")
-          const response=await axios.get(`${backendUrl}/allinvoice/${InvoiceState.toLocaleLowerCase()}`,{headers:{token}})
+          const response=await axios.get(`${backendUrl}/allinvoicestate/${InvoiceState.toLocaleLowerCase()}`,{headers:{token}})
           console.log(response)
           setInvoice(response.data.invoice)
         }
