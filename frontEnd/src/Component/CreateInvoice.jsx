@@ -45,6 +45,7 @@ import { InvoiceContext } from '@/Context/InvoiceContext'
 import { toast } from 'react-toastify'
 const CreateInvoice = () => {
     const[invoiceNumber,setInvoiceNumber]=useState('')
+  const [selectedItem, setSelectedItem] = useState(null);
 
       const [date, setDate] = useState('')
       const [dueDate, setDueDate]=useState()
@@ -55,7 +56,7 @@ const CreateInvoice = () => {
       const[totalAmount,setTotalAmount]=useState()
       const[amountReceive, setAmountReceive]=useState(0)
       const[transectionId,setTransectionId]=useState('')
-      
+      const[Loading,setLoading]=useState(false)
       const {backendUrl,token, business, navigate}=useContext(InvoiceContext)
 
     function generateNumber() {
@@ -152,6 +153,7 @@ const CreateInvoice = () => {
 
     const handleSubmit=async()=>{
       try{
+        setLoading(true)
         console.log(sItem)
 
         if( !date || !clientName || !clientEmail || !clientAddress || !clientPhone || !totalAmount || !amountReceive || !transectionId  ){
@@ -174,7 +176,7 @@ const response = await axios.post(
     companyEmail: business.email,
     imageUrl: business.imageUrl,
     companyPhone: business.phoneNumber,
-    state:business.state,
+    state:business.state.toLowerCase(),
     dueDate
   },
   {
@@ -194,6 +196,9 @@ if(response.data.success === true){
       }
       catch(e){
         console.log(e.message)
+      }
+      finally{
+        setLoading(false)
       }
     }
 
@@ -325,29 +330,34 @@ if(response.data.success === true){
             {/* ++++++++++++++++++++++++++++++++++ item  selection +++++++++++++++++++++++++++++++++ */}
 
 
-           <div  className='   w-full items-center justify-center mt-10' >
-            <Label className=' text-lg font-bold'>Select Items</Label>
-            <Combobox items={allItem}  className="relative w-full">
-  <ComboboxInput placeholder="Select software items" className="w-full" />
+          <div className='w-full items-center justify-center mt-10'>
+  <Label className='text-lg font-bold'>Select Items</Label>
 
-  <ComboboxContent className="w-full">
-    <ComboboxEmpty>No item Found</ComboboxEmpty>
+  <Combobox items={allItem} className="relative w-full">
+    <ComboboxInput
+      placeholder="Select software items"
+      value={selectedItem?.softwareName || ""}
+      className="w-full"
+    />
 
-    <ComboboxList>
-      {(it) => (
-        <ComboboxItem
-          key={it._id || it.softwareName}
-          value={it.softwareName}
-          onClick={() => setSitem([it])}
-        >
-          {it.softwareName}
-        </ComboboxItem>
-      )}
-    </ComboboxList>
-  </ComboboxContent>
-</Combobox>
+    <ComboboxContent className="w-full">
+      <ComboboxEmpty>No item Found</ComboboxEmpty>
 
-    </div>
+      <ComboboxList>
+        {(it) => (
+          <ComboboxItem
+            key={it._id || it.softwareName}
+            value={it.softwareName}
+            onClick={() => {setSitem([it]);setSelectedItem(it)}}
+          >
+            {it.softwareName}
+          </ComboboxItem>
+        )}
+      </ComboboxList>
+    </ComboboxContent>
+  </Combobox>
+</div>
+
 
 
 
@@ -423,8 +433,9 @@ if(response.data.success === true){
         <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg`} placeholder='Enter Transection id' value={transectionId} onChange={(e)=>{setTransectionId(e.target.value)}}/>
             </div>
 <div className='  mb-10'>
-<Button className={` w-[95%] h-10  text-xl font-bold mt-10 mb-10`} onClick={()=>{handleSubmit()}}>
-    Save</Button>
+<Button disabled={Loading} className={` w-[95%] h-10  text-xl font-bold mt-10 mb-10`} onClick={()=>{handleSubmit()}}>
+    {Loading ?'Loading........' :'Save'}
+    </Button>
 </div>
 
     </div>

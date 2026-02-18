@@ -39,7 +39,7 @@ authRouter.put('/changepassword',AuthAdmin,changePassword)
 authRouter.delete('/delete/:id',AuthAdmin,passwordDelete)
 
 // ----------------- all invoice
-authRouter.get('/allinvoice',AuthUser,allInvoice)
+authRouter.get('/allinvoice/:state',AuthUser,allInvoice)
 
 // ----------------- delete invoice
 authRouter.delete('/deleteinvoice/:id',AuthAdmin,deleteInvoice)

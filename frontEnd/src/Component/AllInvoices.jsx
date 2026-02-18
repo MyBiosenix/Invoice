@@ -15,6 +15,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { toast } from 'react-toastify'
 // import { CircularProgressbar } from 'react-circular-progressbar';
 // import 'react-circular-progressbar/dist/styles.css';
@@ -29,10 +38,9 @@ const AllInvoices = () => {
     const{state}=useLocation()
     //------------------getting invoice---------------------
     const[invoice,setInvoice]=useState([])
+    const[InvoiceState,setInvoiceState]=useState('')
 
-    useEffect(()=>{
-      console.log(state)
-    },[state])
+   
     const getInvoice=async()=>{
             try{
               if(role !=='admin' && userPermission !=='edit' ){
@@ -53,7 +61,7 @@ const AllInvoices = () => {
             if(role ==='admin' || userPermission === 'edit'){
               console.log('hii')
            const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
-                console.log(response)
+                //console.log(response)
                  setInvoice(response.data.invoice) 
             }
                 
@@ -63,6 +71,25 @@ const AllInvoices = () => {
         toast.error(e.message)
       }
     }
+
+
+    const  stateInvoice=async()=>{
+      try{
+        if(InvoiceState){
+          console.log("yes")
+          const response=await axios.get(`${backendUrl}/allinvoice/${InvoiceState.toLocaleLowerCase()}`,{headers:{token}})
+          console.log(response)
+          setInvoice(response.data.invoice)
+        }
+      }
+      catch(e){
+
+      }
+    }
+
+    useEffect(()=>{
+      stateInvoice()
+    },[InvoiceState])
 
 //------------getting user invoice ---------------
     useEffect(()=>{
@@ -157,46 +184,19 @@ const AllInvoices = () => {
      </Field>
 
 
-     {/* <div className=' w-full overflow-x-auto mt-10'>
-            <Table className={`uppercase`}>
-        <TableCaption>A list of your recent items.</TableCaption>
-        <TableHeader>
-          <TableRow className={`bg-gray-200 border-t-2  items-center`}>
-            <TableHead className="w-[100px] text-center">NAME</TableHead>
-            <TableHead className='text-center'>EMAIL</TableHead>
-            <TableHead className='text-center'>ADDRESS</TableHead>
-             <TableHead className='text-center'>COMPANY</TableHead>
-            <TableHead className="text-center">ACTION</TableHead>
-          </TableRow>
-        </TableHeader>
-        {  filterData?.map((i,id)=>(
-     
-        <TableBody key={id}>
-          <TableRow>
-            <TableCell className="font-medium px-6  text-center text-nowrap"  >{i.clientName}</TableCell>
-            <TableCell className='px-6 text-center'>{i.clientEmail}</TableCell>
-            <TableCell className=' px-6 text-center text-balance'>{i.clientAddress}</TableCell>
-             <TableCell className=' px-6 text-center'>{i.state}</TableCell>
-            
-            <TableCell  className={` flex flex-row gap-5 text-center`}>
-                <Eye  className=' transition hover:scale-125 duration-150 cursor-pointer text-blue-400' onClick={()=>{navigate('/home/invoice',{state:i})}}>view</Eye>
-                { role ==='admin' &&(
-                <Trash2 onClick={()=>{deleteInvoice(i._id)}} color='red' size={20} className=' transition hover:scale-125 duration-150 cursor-pointer'/>
-)}
-
-{  userPermission === 'edit' &&(
-       
-         <Edit className=' transition hover:scale-125 duration-150 cursor-pointer  text-gray-800' onClick={()=>{navigate('/editInvoice',{state:{item:i._id}})}}/>
-        
-)}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-            
-        ))
-     }
-      </Table>
-            </div> */}
+   <Select value={InvoiceState} onValueChange={(data)=>{setInvoiceState(data)}}>
+  <SelectTrigger className={` w-[90%] sm:w-[50%] rounded-xl ring-1 ring-pink-400 mt-10  focus:ring-1 focus:ring-pink-400`}>
+    <SelectValue placeholder="City" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectItem value="delhi">delhi</SelectItem>
+      <SelectItem value="bangalore">bangalore</SelectItem>
+      <SelectItem value="thane">thane</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+   
 
       <div className='w-full mt-10 px-1'>
   <div className='w-full  rounded-lg border border-gray-300 shadow-sm'>
