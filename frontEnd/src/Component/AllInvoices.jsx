@@ -16,14 +16,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { toast } from 'react-toastify'
 // import { CircularProgressbar } from 'react-circular-progressbar';
 // import 'react-circular-progressbar/dist/styles.css';
@@ -111,8 +103,8 @@ const AllInvoices = () => {
      filterData=
     query == ''? invoice : invoice?.filter(i=>(i.clientName?.toLowerCase().includes(query.toLowerCase())))
     
-     filterData=
-    query == ''? invoice : invoice?.filter(i=>(i.companyName?.toLowerCase().includes(query.toLowerCase())))
+    //  filterData=
+    // query == ''? invoice : invoice?.filter(i=>(i.companyName?.toLowerCase().includes(query.toLowerCase())))
     
 
 //---------------- deleting invoice -------------------
@@ -184,18 +176,7 @@ const AllInvoices = () => {
      </Field>
 
 
-   <Select value={InvoiceState} onValueChange={(data)=>{setInvoiceState(data)}}>
-  <SelectTrigger className={` w-[90%] sm:w-[50%] rounded-xl ring-1 ring-pink-400 mt-10  focus:ring-1 focus:ring-pink-400`}>
-    <SelectValue placeholder="City" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectGroup>
-      <SelectItem value="delhi">delhi</SelectItem>
-      <SelectItem value="bangalore">bangalore</SelectItem>
-      <SelectItem value="thane">thane</SelectItem>
-    </SelectGroup>
-  </SelectContent>
-</Select>
+ 
    
 
       <div className='w-full mt-10 px-1'>

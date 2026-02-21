@@ -80,6 +80,8 @@ export const createItem=async(req,res)=>{
      if(des !==''){
        item.des=des
      }
+
+ 
   
      await item.save()
      console.log(item)

@@ -12,7 +12,9 @@ const EditInvoice = () => {
     clientPhone: '',
     clientEmail: '',
     clientAddress:'',
-    amountReceive:''
+    amountReceive:'',
+    phone:'',
+   
   })
   const[loading,setLoading]=useState(false)
 
@@ -111,6 +113,21 @@ finally{
               placeholder="Email address"
             />
           </div>
+
+            <div>
+            <label className="text-sm text-gray-600">Business Phone</label>
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
+              placeholder=" Phone Number"
+            />
+          </div>
+
+
+          
 
           <div>
             <label className="text-sm text-gray-600">Address</label>

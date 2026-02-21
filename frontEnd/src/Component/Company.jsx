@@ -17,6 +17,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   BadgeCheckIcon,
   BellIcon,
@@ -32,6 +42,7 @@ const Company = () => {
 
   const [company, setCompany] = useState([])
   const [query, setQuery] = useState('')
+  const[InvoiceState,setInvoiceState]=useState('')
 
   const getCompany = async () => {
     try {
@@ -55,6 +66,9 @@ const Company = () => {
     getCompany()
   }, [])
 
+  useEffect(()=>{
+    console.log(company)
+  },[company])
   const filterData =
     query === ''
       ? company
@@ -91,6 +105,8 @@ const Company = () => {
  )}
       </Field>
 
+
+        
       {/* Grid View */}
       {filterData.length > 0 ? (
         <div className="w-full sm:w-[90%] mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -101,6 +117,8 @@ const Company = () => {
       ) : (
         <p className="text-gray-400 mt-10">No companies found</p>
       )}
+
+
     </div>
   )
 }
@@ -166,7 +184,7 @@ const{navigate}=useContext(InvoiceContext)
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={()=>{navigate('/home/editcompany',{state:item._id})}}>
+          <DropdownMenuItem onClick={()=>{navigate('/home/editcompany',{state:item._id,})}}>
             <Edit   className=' cursor-pointer'/>
             Edit
           </DropdownMenuItem>
@@ -175,6 +193,7 @@ const{navigate}=useContext(InvoiceContext)
       localStorage.setItem('company', JSON.stringify(item))
       toast.success('Company added successfully')
       navigate('/home/allinvoice',{state:item.companyName})
+      window.location.reload()
     }} className=' cursor-pointer'>
             <Eye/>
             View

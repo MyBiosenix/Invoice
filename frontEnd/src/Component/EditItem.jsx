@@ -14,6 +14,7 @@ const EditItem = () => {
     const[validityPeriod,setValidityPeriod]=useState('')
     const[paymentMode,setPaymentMode]=useState('')
     const[des,setDes]=useState('')
+  
     const[Amount,setAmount]=useState(0)
 
     //context
@@ -26,7 +27,7 @@ const EditItem = () => {
 
     const handleEdit=async()=>{
         try{
-            const response=await axios.put(`${backendUrl}/updateitem`,{id:state,softwareName,validityPeriod,paymentMode,des,Amount}, {headers:{token}})
+            const response=await axios.put(`${backendUrl}/updateitem`,{id:state,softwareName,validityPeriod,paymentMode,des,Amount,}, {headers:{token}})
             console.log(response.data.success)
             if(response.data.success === true){
                 toast.success(response.data.msg)

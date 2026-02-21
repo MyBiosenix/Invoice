@@ -1271,6 +1271,11 @@ export const EditInvoice=async(req, res)=>{
     if(formData.amountReceive !==''){
       invoice.amountReceive=formData.amountReceive
     }
+
+    if(formData.phone !==''){
+      invoice.companyPhone=formData.phone
+    }
+ 
     await invoice.save()
     console.log(invoice)
     res.json({success:true, msg:"updated successfully"})

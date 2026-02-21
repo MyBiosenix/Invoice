@@ -76,6 +76,9 @@ const CreateInvoice = () => {
       const {state}=useLocation()
 
 
+       useEffect(()=>{
+          console.log(business.state.toLowerCase())
+       },[business])
       // -----------------------  checking adit invoice --------------------
       
    
@@ -117,9 +120,6 @@ const CreateInvoice = () => {
 
       // ----------------------------------- getting data from state --------------
 
-      useEffect(()=>{
-        console.log(state)
-      },[])
 
    
     
