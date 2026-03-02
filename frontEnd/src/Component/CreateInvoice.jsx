@@ -39,7 +39,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { useLocation } from 'react-router-dom'
+import { data, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { toast } from 'react-toastify'
@@ -55,30 +55,44 @@ const CreateInvoice = () => {
       const [clientAddress, setClientAddress]=useState('')
       const[totalAmount,setTotalAmount]=useState()
       const[amountReceive, setAmountReceive]=useState(0)
+      const[pendingAmount,setPendingAmount]=useState(0)
       const[transectionId,setTransectionId]=useState('')
       const[Loading,setLoading]=useState(false)
       const {backendUrl,token, business, navigate}=useContext(InvoiceContext)
-
-    function generateNumber() {
-        const arr = new Uint32Array(1);
-        crypto.getRandomValues(arr);
-       setInvoiceNumber(100000 + (arr[0] % 1000));
-      }
-
-     
-
-      useEffect(()=>{
-            generateNumber()
-      },[])
-
+      const[invoice,SetInvoice]=useState([])
 
       // getting coustomer data
       const {state}=useLocation()
 
 
        useEffect(()=>{
+        console.log(state)
           console.log(business.state.toLowerCase())
-       },[business])
+       },[business,state])
+
+    const GetInvoice=async()=>{
+      try{
+          const response=await axios.get(`${backendUrl}/companyInvoice/${business.companyName}`,{headers:{token}})
+      
+          SetInvoice(response.data.invoice)
+      }
+      catch(e){
+        console.log(e.message)
+      }
+    }
+
+    useEffect(()=>{
+      GetInvoice()
+    },[])
+
+ useEffect(() => {
+  console.log('hii')  
+  console.log(invoice.length)
+  setInvoiceNumber("100"+(invoice.length+1))
+  }, [invoice]);
+
+
+      
       // -----------------------  checking adit invoice --------------------
       
    
@@ -138,6 +152,7 @@ const CreateInvoice = () => {
           setClientAddress(state? state.Location : clientAddress)
           setAmountReceive(state? state.PaidAmount: amountReceive)
           setTransectionId(state? state?.transectionId: transectionId)
+          
         if (sItem?.length > 0) {
   const total = sItem.reduce(
     (sum, i) => sum + Number(i.Amount),
@@ -148,6 +163,17 @@ const CreateInvoice = () => {
 
       },[state,sItem])
 
+
+      // -------------------- setting pending Amount ---------------------
+      useEffect(()=>{
+        setPendingAmount(amountReceive == 0? 0 :(totalAmount-amountReceive))
+      },[totalAmount, amountReceive])
+
+
+      useEffect(()=>{
+        console.log("penhding Amount")
+        console.log(pendingAmount)
+      },[pendingAmount])
      // ------------------------------------ handle submit  -------------------------
 
 
@@ -163,6 +189,7 @@ const response = await axios.post(
   `${backendUrl}/createinvoice`,
   { invoiceNumber,
     date,
+    pendingAmount,
     clientName,
     clientEmail,
     clientAddress,
@@ -387,7 +414,7 @@ if(response.data.success === true){
      {/* --------------------Amount pending ------------------------  */}
      <div className=' flex flex-col'>
         <Label> Pending Amount</Label>
-        <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg`} placeholder='₹' value={ amountReceive == '' ? 0 :(totalAmount-amountReceive)} readOnly />
+        <Input className={` w-[90%] sm:w-[20vw] h-10 rounded-lg`} placeholder='₹' value={ pendingAmount ===0? amountReceive == 0? 0 :(totalAmount-amountReceive) :pendingAmount}  onChange={(e)=>{setPendingAmount(e.target.value)}} />
     </div>
 </div>
 

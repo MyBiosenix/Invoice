@@ -255,7 +255,7 @@ useEffect(()=>{
                 <TableCell className="border px-2 py-2 text-right font-medium">{state?.amountReceive}</TableCell>
               </TableRow>
 
-            {i.Amount - state?.amountReceive !=0 &&(
+            {state.pendingAmount!==0 &&(
              <TableRow className="bg-gray-50">
   <TableCell colSpan={6} className="p-0">
     <div className="flex justify-between px-3 w-full">
@@ -278,7 +278,7 @@ useEffect(()=>{
           Balance Due
         </div>
         <div className="border px-2 py-2 text-right font-bold">
-          {parseInt(state?.totalAmount - state?.amountReceive)}
+          {state.pendingAmount}
         </div>
       </div>
 

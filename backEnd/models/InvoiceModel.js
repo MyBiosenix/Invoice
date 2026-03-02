@@ -47,6 +47,10 @@ const invoiceSchema=new mongoose.Schema({
         type:Number
     },
 
+    pendingAmount:{
+        type:Number
+    },
+
     item:[
         {
             softwareName:{type:String},

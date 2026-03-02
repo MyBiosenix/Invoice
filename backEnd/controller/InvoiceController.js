@@ -7,7 +7,7 @@ import { CompanyModel } from "../models/CompanyModel.js"
 
 export const createInvoice=async(req,res)=>{
     try{
-        const{invoiceNumber,clientName, clientEmail,clientPhone, clientAddress,companyName,companyEmail,companyPhone, companyAddress,imageUrl,totalAmount,amountReceive,sItem, date,dueDate,transectionId,state}=req.body
+        const{invoiceNumber,clientName, clientEmail,clientPhone, pendingAmount,clientAddress,companyName,companyEmail,companyPhone, companyAddress,imageUrl,totalAmount,amountReceive,sItem, date,dueDate,transectionId,state}=req.body
         // console.log(clientName)
         const user=await UserModel.findOne({userId:req.userId.Id})
         const company=await CompanyModel.findOne({companyName:companyName})
@@ -26,6 +26,7 @@ export const createInvoice=async(req,res)=>{
             imageUrl,
             totalAmount,
             amountReceive,
+            pendingAmount,
             user:user._id,
             company:company._id,
             item:sItem,
@@ -1189,6 +1190,7 @@ export const allInvoice=async(req,res)=>{
 export const invoiceByCompanyName=async(req,res)=>{
   try{
     const companyName=req.params.companyName
+    console.log("hii ")
     console.log(companyName)
     const invoice =await InvoiceModel.find({companyName:companyName}).sort({_id:-1})
     console.log(invoice)
