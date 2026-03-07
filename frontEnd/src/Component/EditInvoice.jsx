@@ -14,6 +14,12 @@ const EditInvoice = () => {
     clientAddress:'',
     amountReceive:'',
     phone:'',
+    softwareName:'',
+    validityPeriod:'',
+    paymentType:'',
+    des:'',
+    Amount:''
+
    
   })
   const[loading,setLoading]=useState(false)
@@ -147,6 +153,68 @@ finally{
               type="number"
               name="amountReceive"
               value={formData.amountReceive}
+              onChange={handleChange}
+              className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
+              placeholder="Enter amount"
+            />
+          </div>
+
+
+           <div>
+            <label className="text-sm text-gray-600">Software  Name</label>
+            <input
+              type="text"
+              name="softwareName"
+              value={formData.softwareName}
+              onChange={handleChange}
+              className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
+              placeholder="Enter amount"
+            />
+          </div>
+
+            <div>
+            <label className="text-sm text-gray-600">Validity  Period</label>
+            <input
+              type="number"
+              name="validityPeriod"
+              value={formData.validityPeriod}
+              onChange={handleChange}
+              className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
+              placeholder="Enter amount"
+            />
+          </div>
+       
+
+           <div>
+            <label className="text-sm text-gray-600">PayMent  Type</label>
+            <input
+              type="text"
+              name="paymentType"
+              value={formData.paymentType}
+              onChange={handleChange}
+              className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
+              placeholder="Enter amount"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm text-gray-600">des</label>
+            <input
+              type="text"
+              name="des"
+              value={formData.des}
+              onChange={handleChange}
+              className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
+              placeholder="Enter amount"
+            />
+          </div>
+
+            <div>
+            <label className="text-sm text-gray-600">Amount</label>
+            <input
+              type="text"
+              name="Amount"
+              value={formData.Amount}
               onChange={handleChange}
               className="mt-1 w-full rounded-lg bg-gray-100 px-4 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800"
               placeholder="Enter amount"

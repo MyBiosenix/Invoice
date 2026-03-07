@@ -1272,6 +1272,28 @@ export const EditInvoice=async(req, res)=>{
     }
     if(formData.amountReceive !==''){
       invoice.amountReceive=formData.amountReceive
+      invoice.pendingAmount=invoice.item[0].Amount-formData.amountReceive
+    }
+
+    if(formData.softwareName !==''){
+       console.log("hii")
+       console.log(invoice.item[0].softwareName)
+      invoice.item[0].softwareName=formData.softwareName
+    }
+
+    if(formData.validityPeriod !==''){
+      invoice.item[0].validityPeriod=formData.validityPeriod
+    }
+
+    if(formData.paymentType !==''){
+      invoice.item[0].paymentType=formData.paymentType
+    }
+
+    if(formData.des !==''){
+      invoice.item[0].des=formData.des
+    }
+    if(formData.Amount !==''){
+      invoice.item[0].Amount=formData.Amount
     }
 
     if(formData.phone !==''){

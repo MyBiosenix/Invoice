@@ -72,6 +72,7 @@ const userBasedSales =async()=>{
             <Route path="change" element={<ChangePassword/>}/>
             <Route path="edititem" element={<EditItem/>}/>
             <Route path="editcompany" element={<EditCompany/>}/>
+            
           </Routes>
         </SidebarInset>
 
