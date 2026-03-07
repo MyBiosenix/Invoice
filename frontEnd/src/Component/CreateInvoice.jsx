@@ -218,7 +218,7 @@ console.log(response)
 if(response.data.success === true){
   toast.success('Invoice added successfully')
  
-
+    navigate('/home/invoice',{state:response.data.invoice})
 }
       }
       catch(e){

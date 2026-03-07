@@ -3,6 +3,21 @@ import { CompanyModel } from '../models/CompanyModel.js'
 import { UserModel } from '../models/UserModel.js'
 import { companySales } from './InvoiceController.js'
 
+
+export const deleteCompany=async(req,res)=>{
+    try{
+     const id=req.params.id
+     console.log(id)
+     const delCompany= await CompanyModel.findOneAndDelete({_id:id})
+     res.json({success:true,msg:' Company Deleted Successfully'})
+    }
+    catch(e){
+        res.json({success:false,error:e.message})
+    }
+}
+
+
+
 //------------------------ adding  company ----------------
 
 export const addCompany=async(req,res)=>{
@@ -93,6 +108,9 @@ export const editCompany=async(req,res)=>{
         }
         if(formData.address !==''){
             company.address=formData.address
+        }
+        if(formData.companyName !==''){
+            company.companyName=formData.companyName.toLowerCase()
         }
         await company.save()
 

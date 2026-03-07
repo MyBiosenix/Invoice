@@ -10,6 +10,7 @@ const {state}=useLocation()
   const { navigate, backendUrl, token, role, userPermission } =
     useContext(InvoiceContext)
   const [formData, setFormData] = useState({
+    companyName:"",
     phone: "",
     address: "",
     city: "",
@@ -47,7 +48,21 @@ useEffect(()=>{
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          
+          {/* COMPANY NAME */}
+         <div>
+            <label className="block text-sm font-medium mb-1">
+               Company Name
+            </label>
+            <input
+              type="tel"
+              name="companyName"
+              value={formData.companyName}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+
           {/* Phone */}
           <div>
             <label className="block text-sm font-medium mb-1">

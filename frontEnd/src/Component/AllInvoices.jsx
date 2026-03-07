@@ -52,9 +52,17 @@ const AllInvoices = () => {
 
             if(role ==='admin' || userPermission === 'edit'){
               console.log('hii')
-           const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
-                //console.log(response)
+              if(state){
+                    const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
+                    console.log(response)
                  setInvoice(response.data.invoice) 
+              }else{
+                  const response= await axios.get(`${backendUrl}/allinvoice`,{headers:{token}})
+                    console.log(response)
+                 setInvoice(response.data.invoice) 
+              }
+       
+                
             }
                 
                 

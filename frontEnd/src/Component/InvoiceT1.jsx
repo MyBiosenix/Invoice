@@ -22,11 +22,14 @@ const InvoiceT1 = () => {
 
 //--------------------- business -----------------
 
-useEffect(()=>{
-    console.log(state)
-},[])
 
   const{state}=useLocation()
+
+  useEffect(()=>{
+    console.log(" hiii ")
+    console.log(state.createdAt)
+},[])
+
 
   const handleDownload = () => {
 
@@ -168,7 +171,7 @@ useEffect(()=>{
         <div className="flex justify-between text-sm">
           <div className="space-y-1">
             <p><span className="font-semibold">Invoice No:</span> {state?.InvoiceNumber}</p>
-            <p><span className="font-semibold">Date:</span> {new Date(`${state?.date}`).toLocaleDateString("en-GB")}</p>
+            <p><span className="font-semibold">Date:</span> {new Date(`${state?.createdAt}`).toLocaleDateString("en-GB")}</p>
           </div>
           <div className="text-right space-y-1 max-w-xs">
             <p>{state?.companyAddress}</p>

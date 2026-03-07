@@ -47,6 +47,10 @@ const SideNavInner = () => {
     // {name:"All Invoice", icon: Notebook, key:"allinvoice", href:'/home/allinvoice'},
    ...(role === "admin"
     ? [{ name: "All User", icon: User2Icon, key: "allUser", href: "/home/allUser" }]
+    : []),
+
+     ...(role === "admin"
+    ? [{ name: "All Invoice", icon: User2Icon, key: "all Invoice", href: "/home/allinvoice" }]
     : [])
     // { name: "Invoices", icon: StickyNote, key: "invoices" ,href:'' },
   ];

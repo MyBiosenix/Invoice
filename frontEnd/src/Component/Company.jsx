@@ -43,6 +43,7 @@ const Company = () => {
   const [company, setCompany] = useState([])
   const [query, setQuery] = useState('')
   const[InvoiceState,setInvoiceState]=useState('')
+  const[city,setCity]=useState('')
 
   const getCompany = async () => {
     try {
@@ -69,12 +70,21 @@ const Company = () => {
   useEffect(()=>{
     console.log(company)
   },[company])
-  const filterData =
+  var filterData =
     query === ''
       ? company
       : company?.filter((i) =>
           i.companyName?.toLowerCase().includes(query.toLowerCase())
         )
+
+      filterData= city ==='' ? company:company?.filter((i)=> i.state.toLowerCase() === city.toLowerCase() )
+
+        useEffect(()=>{
+          console.log(filterData
+
+          )
+          console.log(city)
+        },[city])
 
   return (
     <div className="w-full flex flex-col items-center pb-10 px-4">
@@ -105,7 +115,19 @@ const Company = () => {
  )}
       </Field>
 
-
+        <Select onValueChange={(data)=>{setCity(data)}}>
+  <SelectTrigger className=" w-[95vw] sm:w-[50vw] mt-5">
+    <SelectValue placeholder="City"  className='  placeholder:text-2xl placeholder:font-extrabold'/>
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectItem value="Delhi">Delhi</SelectItem>
+      <SelectItem value="Bangalore">Bangalore</SelectItem>
+      <SelectItem value="Thane">Thane</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+    
         
       {/* Grid View */}
       {filterData.length > 0 ? (
@@ -146,7 +168,21 @@ const InfoItem = ({ icon, text, isMultiLine = false, gradient }) => (
 // Company Card Component
 const CompanyCard = ({ item }) => {
   const { setBusiness } = useContext(InvoiceContext)
-const{navigate}=useContext(InvoiceContext)
+const{navigate,backendUrl,token}=useContext(InvoiceContext)
+
+const delCompany=async(id)=>{
+  try{
+     const response=await axios.delete(`${backendUrl}/delcompany/${id}`,{headers:{token}})
+     console.log(response.data.data)
+     if(response.data.success){
+      toast.success(" deleted success")
+      window.location.reload()
+     }
+  }
+  catch(e){
+   console.log(e.message)
+  }
+}
   return (
     <div 
    
@@ -199,7 +235,12 @@ const{navigate}=useContext(InvoiceContext)
             View
           </DropdownMenuItem>
 
-         
+         <DropdownMenuItem className=" cursor-pointer" onClick={()=>{
+         delCompany(item._id)
+         }}>
+          <Trash2 className=' cursor-pointer'/>
+                Delete
+         </DropdownMenuItem>
         </DropdownMenuGroup>
        
       </DropdownMenuContent>

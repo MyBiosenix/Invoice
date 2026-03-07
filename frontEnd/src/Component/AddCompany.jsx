@@ -29,7 +29,7 @@ const AddCompany = () => {
 
     //adding data info form 
     const formData =new FormData()
-    formData.append("companyName",companyName)
+    formData.append("companyName",companyName.toLowerCase())
     formData.append('email',email)
     formData.append('phoneNumber',phoneNumber)
     formData.append('address',address)
