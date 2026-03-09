@@ -69,10 +69,13 @@ const InvoiceT1 = () => {
 
   // 👇 get PDF as blob
   const blob = await pdf.outputPdf("blob");
-
+  console.log("hii")
+   console.log(state.companyName)
   const formData=new FormData()
   formData.append('invoice',blob,"invoice.pdf")
-  formData.append('companyName',state.companyName)
+
+  formData.append('companyName',state.companyName.toLowerCase().trim())
+
   formData.append('email',state.clientEmail)
   console.log(state.clientEmail)
   formData.append('name',state.clientName)

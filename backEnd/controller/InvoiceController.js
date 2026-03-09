@@ -355,6 +355,7 @@ export const sendMail=async(req,res)=>{
         //------------------- mail to --------------
 
         else if(companyName === 'tenr global'){
+          console.log("hii baby")
               const trap=nodemailer.createTransport({      
                 host: "smtp.gmail.com",
                 service:"gmail",
