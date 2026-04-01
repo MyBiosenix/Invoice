@@ -1,12 +1,30 @@
 import { assets } from '@/assets/assets'
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import axios from 'axios'
-import { Castle, Plus, Search } from 'lucide-react'
+import { Castle, Edit, EllipsisVertical, EllipsisVerticalIcon, Eye, Plus, Search, Trash, Trash2, View } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Field } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+
 import { Button } from '@/components/button-1'
+
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  BadgeCheckIcon,
+  BellIcon,
+  CreditCardIcon,
+  LogOutIcon,
+} from "lucide-react"
+import { Icon } from '@radix-ui/react-select'
+import { Input } from '@base-ui/react'
 
 const Company = () => {
   const { navigate, backendUrl, token, role, userPermission } =
@@ -59,7 +77,7 @@ const Company = () => {
       </h2>
 
   <Field orientation="horizontal"  className={' w-[95%] sm:w-[60vw] mt-5  '}>
-        <Input type="search" placeholder="Search..." className={'rounded-3xl h-12'} value={query} onChange={(e)=>{setQuery(e.target.value)}} />
+        <Input type="search" placeholder="Search..." className={'rounded-3xl h-12 w-full'} value={query} onChange={(e)=>{setQuery(e.target.value)}} />
         <Button className={' h-10  w-24  sm:w-26 text-base font-bold rounded-xl'}>
           <Search />
           <p className=' hidden sm:flex'>Search</p>
@@ -113,12 +131,7 @@ const CompanyCard = ({ item }) => {
 const{navigate}=useContext(InvoiceContext)
   return (
     <div 
-    onClick={() => {
-      setBusiness(JSON.stringify(item))
-      localStorage.setItem('company', JSON.stringify(item))
-      toast.success('Company added successfully')
-      navigate('/home/allinvoice',{state:item.companyName})
-    }}
+   
     className="relative w-full h-full flex flex-col justify-between 
       rounded-2xl overflow-hidden bg-[#0B0F1A] 
       shadow-md transition-all duration-300 hover:shadow-xl cursor-pointer">
@@ -139,13 +152,40 @@ const{navigate}=useContext(InvoiceContext)
       <div className="relative z-10 p-4 flex flex-col gap-3">
 
         {/* Company Name */}
-        <h2
-          className="text-sm uppercase flex  place-self-center sm:text-lg font-bold tracking-tight
+        <div className=' flex flex-row justify-between px-2'>
+        <input value={item.companyName}
+          className=" w-[50%] text-sm uppercase flex  place-self-center sm:text-lg font-bold tracking-tight
           bg-gradient-to-r from-white via-indigo-200 to-cyan-200
           bg-clip-text text-transparent">
-          {item.companyName}
-        </h2>
+         
+        </input>
+         <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+         <EllipsisVerticalIcon size={24} color='white'/>
+        
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuGroup>
+          <DropdownMenuItem onClick={()=>{navigate('/home/editcompany',{state:item._id})}}>
+            <Edit   className=' cursor-pointer'/>
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => {
+      setBusiness(JSON.stringify(item))
+      localStorage.setItem('company', JSON.stringify(item))
+      toast.success('Company added successfully')
+      navigate('/home/allinvoice',{state:item.companyName})
+    }} className=' cursor-pointer'>
+            <Eye/>
+            View
+          </DropdownMenuItem>
 
+         
+        </DropdownMenuGroup>
+       
+      </DropdownMenuContent>
+    </DropdownMenu>
+        </div>
         {/* Details */}
         <div className="space-y-2">
           <InfoItem
@@ -170,6 +210,13 @@ const{navigate}=useContext(InvoiceContext)
             gradient="from-cyan-500/30 to-cyan-50/10"
           />
         </div>
+
+       
+       
+
+ 
+   
+
 
       
       </div>

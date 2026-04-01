@@ -1,6 +1,7 @@
 import {v2 as cloudinary} from 'cloudinary'
 import { CompanyModel } from '../models/CompanyModel.js'
 import { UserModel } from '../models/UserModel.js'
+import { companySales } from './InvoiceController.js'
 
 //------------------------ adding  company ----------------
 
@@ -73,6 +74,32 @@ res.json({success:true,company})
     }
     catch(e){
         console.log(e.message)
+    }
+}
+
+
+//------------------- edit company by id --------------------
+
+export const editCompany=async(req,res)=>{
+    try{
+        const{formData,id}=req.body
+        const company=await CompanyModel.findOne({_id:id})
+        console.log(formData)
+        if(formData.phone !==''){
+            company.phoneNumber=formData.phone
+        }
+        if(formData.city !==''){
+            company.state=formData.city
+        }
+        if(formData.address !==''){
+            company.address=formData.address
+        }
+        await company.save()
+
+        res.json({success:true,msg:"update successfully"})
+    }
+    catch(e){
+        res.json({success:false,error:e.message})
     }
 }
 

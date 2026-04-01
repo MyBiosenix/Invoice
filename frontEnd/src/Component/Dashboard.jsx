@@ -4,6 +4,24 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import Graph from './Graph'
 import PeiChart from './PeiChart'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 
 //------------------- c hart import and register 

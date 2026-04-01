@@ -65,7 +65,7 @@ const Coustomer = () => {
         seen.add(key);
         return true;
       }).reverse();
-
+      console.log(uniqueRows)
       setData(uniqueRows);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(uniqueRows));
       e.target.value = "";
@@ -75,6 +75,11 @@ const Coustomer = () => {
   };
 
   // Delete all rows
+
+useEffect(()=>{
+  console.log(data)
+},[])
+
   const deleteAll = () => {
     if (window.confirm("Are you sure you want to delete all customers?")) {
       setData([]);
@@ -88,7 +93,7 @@ const Coustomer = () => {
     return data.filter(
       (item) =>
         (item.CandidateName || "").toLowerCase().includes(q) &&
-        item.INVOICESTATUS !== "SENT"
+        item?.INVOICESTATUS !== "SENT"
     );
   }, [data, query]);
 
@@ -184,6 +189,7 @@ const Coustomer = () => {
                           Location: item.Location,
                           PaidAmount: item.PaidAmount,
                           ProjectSelection: item.ProjectSelection,
+                          transectionId:item.TransactionId
                         },
                       })
                     }

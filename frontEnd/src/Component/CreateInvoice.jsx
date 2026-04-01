@@ -136,6 +136,7 @@ const CreateInvoice = () => {
           setClientphone(state? state.MobileNumber:clientPhone )
           setClientAddress(state? state.Location : clientAddress)
           setAmountReceive(state? state.PaidAmount: amountReceive)
+          setTransectionId(state? state?.transectionId: transectionId)
         if (sItem?.length > 0) {
   const total = sItem.reduce(
     (sum, i) => sum + Number(i.Amount),
@@ -187,6 +188,7 @@ const response = await axios.post(
 console.log(response)
 if(response.data.success === true){
   toast.success('Invoice added successfully')
+  navigate('/home/allinvoice')
 
 }
       }

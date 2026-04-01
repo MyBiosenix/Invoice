@@ -38,7 +38,7 @@ export const defaultItems=async()=>{
                     paymentType:'ONLINE',
                     des:'Project Management & Software Fee, document scanning & uploading, employers commission, and other charges',
                     Amount:1999,
-                    ItemType:'BASIC'
+                    ItemType:'BAS'
                 },
 
 
@@ -47,7 +47,7 @@ export const defaultItems=async()=>{
                     paymentType:'ONLINE',
                     des:'Project Management & Software Fee, document scanning & uploading, employers commission, and other charges',
                     Amount:2999,
-                    ItemType:'STANDARD'
+                    ItemType:'STAN'
                 },
 
                 {softwareName:'DMSReg V 2.9',
@@ -64,9 +64,17 @@ export const defaultItems=async()=>{
                     paymentType:'ONLINE',
                     des:'Project Management & Software Fee, document scanning & uploading, employers commission, and other charges',
                     Amount:3999,
-                    ItemType:'PROFESSIONAL'
+                    ItemType:'PRO'
                 },
+                
 
+                 {softwareName:'DMSReg V 3.9',
+                    validityPeriod:'35 Day',
+                    paymentType:'ONLINE',
+                    des:'Project Management & Software Fee, document scanning & uploading, employers commission, and other charges',
+                    Amount:3999,
+                    ItemType:'PRE'
+                },
                    
             ])
 

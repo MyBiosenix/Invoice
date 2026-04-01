@@ -27,11 +27,11 @@ const PeiChart = () => {
   }, [backendUrl, token]);
 
   const chartData = {
-    labels: companySales.map((c) => c.companyName),
+    labels: companySales?.map((c) => c.companyName) || [],
     datasets: [
       {
         label: "Sales %",
-        data: companySales.map((c) => c.percentage),
+        data: companySales?.map((c) => c.percentage) || [],
         backgroundColor: [
           "#FF6384",
           "#36A2EB",

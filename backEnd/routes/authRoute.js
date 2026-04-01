@@ -3,7 +3,7 @@ import { alluser, changePassword, login, passwordDelete, register } from "../con
 import { AuthUser } from "../middlewere/Auth.js";
 import {  createItem, deleteItem, EditItem, getAllItem } from "../controller/ItemController.js";
 import { upload } from "../middlewere/multer.js";
-import { addCompany, getCompany, stateSpecificCompany } from "../controller/CompanyController.js";
+import { addCompany, editCompany, getCompany, stateSpecificCompany } from "../controller/CompanyController.js";
 import { allInvoice, allUserSales, companySales, createInvoice, deleteInvoice, EditInvoice, getAllDailySales, getDailySales, getinvoice, invoiceByCompanyName, sendMail } from "../controller/InvoiceController.js";
 import { AuthAdmin } from "../middlewere/Admin.js";
 
@@ -70,3 +70,7 @@ authRouter.get('/multisales/:id',AuthAdmin,allUserSales)
 
 // ---------------------- getting invoice based on company name ---------
 authRouter.get('/companyInvoice/:companyName',AuthUser,invoiceByCompanyName)
+
+//------------------------- edit company ----------------
+
+authRouter.put('/editcompany',AuthUser,editCompany)

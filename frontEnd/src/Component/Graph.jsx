@@ -9,6 +9,7 @@ import {
   Legend,
   Title,
   CategoryScale,
+  Filler,
 } from "chart.js";
 import 'chartjs-adapter-date-fns';
 import { InvoiceContext } from '@/Context/InvoiceContext';
@@ -23,7 +24,8 @@ ChartJS.register(
   CategoryScale,
   Tooltip,
   Legend,
-  Title
+  Title,
+  Filler
 );
 
 const DailySalesGraph = () => {
@@ -90,19 +92,19 @@ const fetchSales = async (type = 'Day') => {
   }, []);
 
   // Colors for points based on increase/decrease
-  const pointColors = graphData.map((day, i) => {
+  const pointColors = graphData?.map((day, i) => {
     if (i === 0) return "rgba(54, 162, 235, 0.7)";
     return day.totalAmount >= graphData[i - 1].totalAmount
       ? "rgba(0, 200, 0, 0.7)" // up
       : "rgba(255, 0, 0, 0.7)"; // down
-  });
+  }) || [];
 
   const data = {
-    labels: graphData.map(item => item.date),
+    labels: graphData?.map(item => item.date) || [],
     datasets: [
       {
         label: "Sales (₹)",
-        data: graphData.map(item => item.totalAmount),
+        data: graphData?.map(item => item.totalAmount) || [],
         borderColor: "rgba(54, 162, 235, 1)",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         fill: true,
@@ -126,7 +128,7 @@ const fetchSales = async (type = 'Day') => {
               ? context.label.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
               : context.label;
             const sales = context.raw.toLocaleString();
-            const prev = context.dataIndex === 0 ? context.raw : graphData[context.dataIndex - 1].totalAmount;
+            const prev = context.dataIndex === 0 ? context.raw : (graphData?.[context.dataIndex - 1]?.totalAmount || 0);
             const arrow = context.raw >= prev ? " ↑" : " ↓";
             return `${date}: ₹${sales}${context.dataIndex === 0 ? '' : arrow}`;
           }

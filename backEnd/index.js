@@ -19,7 +19,11 @@ defaultItems()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cors())
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+}))
 
 app.use('/api',authRouter)
 
@@ -27,6 +31,7 @@ app.get('/',(req,res)=>{
     res.json('landing page is here ')
 })
 
-app.listen(3000,()=>{
-    console.log('http://localhost:3000')
+const PORT = process.env.PORT || 3000
+app.listen(PORT,()=>{
+    console.log(`Server running on port ${PORT}`)
 })
