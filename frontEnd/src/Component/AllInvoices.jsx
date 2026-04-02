@@ -4,7 +4,7 @@ import { Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { Edit, Eye, Plus, Search, Trash2 } from 'lucide-react'
-import axios from 'axios'
+import api from '@/lib/api'
 
 import {
   Table,
@@ -37,7 +37,7 @@ const AllInvoices = () => {
             try{
               if(role !=='admin' && userPermission !=='edit' ){
                 console.log('hii')
-              const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
+              const response= await api.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
                 console.log(response.data)
                 setInvoice(response.data.invoice) 
               }
@@ -52,7 +52,7 @@ const AllInvoices = () => {
 
             if(role ==='admin' || userPermission === 'edit'){
               console.log('hii')
-           const response= await axios.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
+           const response= await api.get(`${backendUrl}/companyInvoice/${state}`,{headers:{token}})
                 console.log(response)
                  setInvoice(response.data.invoice) 
             }
@@ -92,7 +92,7 @@ const AllInvoices = () => {
 
     const deleteInvoice=async(id)=>{
       try{
-        const response=await axios.delete(`${backendUrl}/deleteinvoice/${id}`,{headers:{token}})
+        const response=await api.delete(`${backendUrl}/deleteinvoice/${id}`,{headers:{token}})
         console.log(response.data)
         if(response.data.success == true){
           toast.success(response.data.message)

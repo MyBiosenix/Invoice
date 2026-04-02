@@ -1,7 +1,7 @@
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { Button, Toast } from '@base-ui/react'
-import axios from 'axios'
+import api, { getApiErrorMessage } from '@/lib/api'
 import { Eye, EyeOff, IdCard, User } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 
@@ -29,7 +29,7 @@ const Register = () => {
     const [state,setState]=useState('')
 
     // context data
-    const {token, setToken, setName,name,setRole, role , backendUrl , navigate, userPermission, setUserPermission}=useContext(InvoiceContext)
+    const { role, navigate }=useContext(InvoiceContext)
 
     //-------------------- checking admin -----------------
 
@@ -52,7 +52,7 @@ const Register = () => {
       const handleSubmit =async()=>{
         try{
             setLoading(true)
-            const response= await axios.post(`${backendUrl}/register`,{userName,userId,password,permission,companyName, state})
+            const response= await api.post('/register',{userName,userId,password,permission,companyName, state})
 
             console.log(response.data.token)
             if(response.data.success == true){
@@ -72,12 +72,12 @@ const Register = () => {
                 navigate('/show',{state:{userId:userId,password:password}})
             }
             else{
-                toast.error(response.data.error)
+                toast.error(response.data.message || 'Unable to register user')
             }
            
         }
         catch(e){
-            console.log(e.message)
+            toast.error(getApiErrorMessage(e, 'Unable to register user'))
         }
         finally{
             setLoading(false)

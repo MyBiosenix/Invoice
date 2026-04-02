@@ -1,5 +1,5 @@
 import { InvoiceContext } from "@/Context/InvoiceContext";
-import axios from "axios";
+import api from '@/lib/api';
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -26,7 +26,7 @@ const {state}=useLocation()
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Updated Company Data:", formData);
-    const response=await axios.put(`${backendUrl}/editcompany`,{formData,id:state},{headers:{token}})
+    const response=await api.put(`${backendUrl}/editcompany`,{formData,id:state},{headers:{token}})
     if(response.data.success){
         toast.success(response.data.msg)
         navigate('/home/item')

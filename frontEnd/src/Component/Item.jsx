@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '@/lib/api'
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { toast } from 'react-toastify'
 
@@ -28,7 +28,7 @@ const Item = () => {
       //geting items from backend 
       const getItem=async()=>{
         try{
-          const response=await axios.get(`${backendUrl}/allitems`,{headers:{token}})
+          const response=await api.get(`${backendUrl}/allitems`,{headers:{token}})
           console.log(response)
           if(response.data.success == true){
             setItem(response.data.items)
@@ -42,7 +42,7 @@ const Item = () => {
        //deleted  items from backend
        const deleteItem=async(item)=>{
         try{
-          const response=await axios.delete(`${backendUrl}/deleteitem/${item}`,{headers:{token}})
+          const response=await api.delete(`${backendUrl}/deleteitem/${item}`,{headers:{token}})
           console.log(response.data)
           if(response.data.success === true){
             toast.success('deleted success')

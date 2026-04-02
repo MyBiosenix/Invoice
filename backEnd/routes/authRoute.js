@@ -6,17 +6,27 @@ import { upload } from "../middlewere/multer.js";
 import { addCompany, editCompany, getCompany, stateSpecificCompany } from "../controller/CompanyController.js";
 import { allInvoice, allUserSales, companySales, createInvoice, deleteInvoice, EditInvoice, getAllDailySales, getDailySales, getinvoice, invoiceByCompanyName, sendMail } from "../controller/InvoiceController.js";
 import { AuthAdmin } from "../middlewere/Admin.js";
+import { sendError } from "../utils/apiResponse.js";
 
 export const authRouter=express.Router()
 
 authRouter.post('/register',register)
 
-authRouter.post('/login',login)
+authRouter
+  .route('/login')
+  .post(login)
+  .get((req, res) =>
+    sendError(res, {
+      statusCode: 405,
+      message: "Use POST /api/login to login",
+    })
+  );
 
 authRouter.get('/allitems',AuthUser,getAllItem)
 authRouter.post('/createitem',AuthUser,createItem)
 authRouter.post('/addcompany',AuthUser,upload.single('image'), addCompany)
 authRouter.get('/getCompany',AuthUser,getCompany)
+authRouter.get('/getcompany',AuthUser,getCompany)
 authRouter.post('/createinvoice',AuthUser,createInvoice)
 authRouter.get('/getinvoice',AuthUser,getinvoice)
 authRouter.post('/sendmail',AuthUser,upload.single('invoice'), sendMail)

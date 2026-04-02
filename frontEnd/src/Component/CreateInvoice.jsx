@@ -40,7 +40,7 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import { useLocation } from 'react-router-dom'
-import axios from 'axios'
+import api from '@/lib/api'
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { toast } from 'react-toastify'
 const CreateInvoice = () => {
@@ -89,7 +89,7 @@ const CreateInvoice = () => {
       //geting items from backend 
       const getItem=async()=>{
         try{
-          const response=await axios.get(`${backendUrl}/allitems`,{headers:{token}})
+          const response=await api.get(`${backendUrl}/allitems`,{headers:{token}})
           console.log(response.data.items)
           if(response.data.success == true){
             setItem(response.data.items)
@@ -157,7 +157,7 @@ const CreateInvoice = () => {
         if( !date || !clientName || !clientEmail || !clientAddress || !clientPhone || !totalAmount || !amountReceive || !transectionId  ){
           return toast.error('all field required')
         }
-const response = await axios.post(
+const response = await api.post(
   `${backendUrl}/createinvoice`,
   { invoiceNumber,
     date,

@@ -1,6 +1,6 @@
 import { InvoiceContext } from '@/Context/InvoiceContext'
 
-import axios from 'axios'
+import api from '@/lib/api'
 import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -40,7 +40,7 @@ const EditInvoice = () => {
     e.preventDefault()
 try{
   setLoading(true)
-    const response=await axios.put(`${backendUrl}/updateinvoice`,{formData, id:state.item},{headers:{token}})
+    const response=await api.put(`${backendUrl}/updateinvoice`,{formData, id:state.item},{headers:{token}})
     console.log(response)
     console.log('Updated Invoice:', formData)
     if(response.data.success ===true){

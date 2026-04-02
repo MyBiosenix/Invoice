@@ -1,7 +1,7 @@
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { Input } from '@base-ui/react'
 import { Label } from '@radix-ui/react-label'
-import axios from 'axios'
+import api from '@/lib/api'
 import React, { useContext, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -14,7 +14,7 @@ const ChangePassword = () => {
 
   const change=async()=>{
     try{
-        const response =await axios.put(`${backendUrl}/changepassword`,{password,userId:state.userId}, {headers:{token}})
+        const response =await api.put(`${backendUrl}/changepassword`,{password,userId:state.userId}, {headers:{token}})
         console.log(response)
         if(response.data.success == true){
             toast.success('password change successfully ')

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import html2pdf from "html2pdf.js";
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '@/lib/api';
 import { InvoiceContext } from '@/Context/InvoiceContext';
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from 'react-toastify';
@@ -74,7 +74,7 @@ useEffect(()=>{
   console.log(state.clientEmail)
   formData.append('name',state.clientName)
 
-  const response=await axios.post(`${backendUrl}/sendmail`,formData,{headers:{token}})
+  const response=await api.post(`${backendUrl}/sendmail`,formData,{headers:{token}})
   console.log(response)
     if(response.data.success === true){
       toast.success("mail send successfully")

@@ -17,7 +17,7 @@ import SideNav from "@/Component/SideNav";
 
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { InvoiceContext } from "@/Context/InvoiceContext";
-import axios from "axios";
+import api from '@/lib/api';
 import { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -38,7 +38,7 @@ userBasedSales()
 
 const userBasedSales =async()=>{
   try{
-    const responce=await axios.get(`${backendUrl}/SALESTP`,{headers:{token}})
+    const responce=await api.get(`${backendUrl}/SALESTP`,{headers:{token}})
     console.log(responce)
   }
   catch(e){
@@ -79,3 +79,4 @@ const userBasedSales =async()=>{
     </SidebarProvider>
   );
 }
+

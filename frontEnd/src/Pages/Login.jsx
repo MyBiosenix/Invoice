@@ -1,7 +1,7 @@
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { InvoiceContext } from '@/Context/InvoiceContext'
 import { Button, Toast } from '@base-ui/react'
-import axios from 'axios'
+import api, { getApiErrorMessage } from '@/lib/api'
 import { Eye, EyeOff, IdCard, User } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 
@@ -26,7 +26,7 @@ const Login = () => {
         const [view, setView]=useState(true)
     
         // context data
-        const {token, setToken, backendUrl , navigate, role,setRole, name, setName, userPermission,setUserPermission}=useContext(InvoiceContext)
+        const {token, setToken, navigate, setRole, setName, setUserPermission}=useContext(InvoiceContext)
 
 
 
@@ -42,8 +42,13 @@ const Login = () => {
 
          const handleSubmit =async()=>{
         try{
+            if(!userId || !password){
+                toast.error('User ID and password are required')
+                return
+            }
+
             setLoading(true)
-            const response= await axios.post(`${backendUrl}/login`,{userId,password})
+            const response= await api.post('/login',{userId,password})
 
             console.log(response)
             if(response.data.success == true){
@@ -57,17 +62,17 @@ const Login = () => {
 
                 setUserPermission(response.data.permission)
                 localStorage.setItem('permission',response.data.permission)
-                toast.success('Register successfully')
+                toast.success(response.data.message || 'Login successful')
                 navigate('/home/*')
             }
             else{
                 console.log(response.data)
-                toast.error(response.data.msg)
+                toast.error(response.data.message || 'Unable to login')
             }
            
         }
         catch(e){
-            console.log(e.message)
+            toast.error(getApiErrorMessage(e, 'Unable to login'))
         }
         finally{
             setLoading(false)

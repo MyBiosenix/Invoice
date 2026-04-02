@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import axios from "axios";
+import api from '@/lib/api';
 import { InvoiceContext } from "@/Context/InvoiceContext";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
@@ -14,7 +14,7 @@ const PeiChart = () => {
   useEffect(() => {
     const fetchCompanySales = async () => {
       try {
-        const response = await axios.get(`${backendUrl}/SALESTP`, {
+        const response = await api.get(`${backendUrl}/SALESTP`, {
           headers: { token },
         });
         setCompanySales(response.data.data); // [{companyName, totalSales, percentage}]

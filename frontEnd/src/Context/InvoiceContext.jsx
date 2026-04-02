@@ -1,12 +1,13 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiBaseUrl } from "@/lib/api";
 
 
 export const InvoiceContext=createContext()
 
 export const InvoiceContextProvider=(prop)=>{
     const navigate=useNavigate()
-    const backendUrl=import.meta.env.VITE_BACKEND_URL
+    const backendUrl=apiBaseUrl
 
     // token 
     const [token,setToken]=useState(localStorage.getItem('token')? localStorage.getItem('token'):'')

@@ -1,5 +1,5 @@
 import { InvoiceContext } from '@/Context/InvoiceContext'
-import axios from 'axios'
+import api from '@/lib/api'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import {
@@ -30,7 +30,7 @@ const AllUser = () => {
 
      const getUser=async()=>{
       try{
-        const response=await axios.get(`${backendUrl}/alluser`,{headers:{token}})
+        const response=await api.get(`${backendUrl}/alluser`,{headers:{token}})
         console.log(response.data)
         console.log(response.data.succes)
         if(response.data.succes){
@@ -45,7 +45,7 @@ const AllUser = () => {
 
      const deleteUser=async(id)=>{
       try{
-        const response=await axios.delete(`${backendUrl}/delete/${id}`,{headers:{token}})
+        const response=await api.delete(`${backendUrl}/delete/${id}`,{headers:{token}})
         console.log(response)
         if(response.data.success){
           toast.success(response.data.msg)

@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { ChevronDownIcon } from "lucide-react"
-import axios from "axios"
+import api from '@/lib/api'
 import { InvoiceContext } from "@/Context/InvoiceContext"
 import { toast } from "react-toastify"
 
@@ -37,7 +37,7 @@ const{backendUrl,token}=useContext(InvoiceContext)
       try{
         setLoading(true)
         console.log("pracg")
-        const response=await axios.post(`${backendUrl}/createitem`,{softwareName,Amount, date, des, validityPeriod},{headers:{token}} )
+        const response=await api.post(`${backendUrl}/createitem`,{softwareName,Amount, date, des, validityPeriod},{headers:{token}} )
         console.log(response.data)
         if(response.data.success === true){
           toast.success("item  added successfully ")

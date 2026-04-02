@@ -3,7 +3,7 @@ import { Button } from '@/components/button-1'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { InvoiceContext } from '@/Context/InvoiceContext'
-import axios from 'axios'
+import api from '@/lib/api'
 
 import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -26,7 +26,7 @@ const EditItem = () => {
 
     const handleEdit=async()=>{
         try{
-            const response=await axios.put(`${backendUrl}/updateitem`,{id:state,softwareName,validityPeriod,paymentMode,des,Amount}, {headers:{token}})
+            const response=await api.put(`${backendUrl}/updateitem`,{id:state,softwareName,validityPeriod,paymentMode,des,Amount}, {headers:{token}})
             console.log(response.data.success)
             if(response.data.success === true){
                 toast.success(response.data.msg)

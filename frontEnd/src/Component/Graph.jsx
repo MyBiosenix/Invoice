@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import 'chartjs-adapter-date-fns';
 import { InvoiceContext } from '@/Context/InvoiceContext';
-import axios from 'axios';
+import api from '@/lib/api';
 import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -38,7 +38,7 @@ const fetchSales = async (type = 'Day') => {
       ? `${backendUrl}/multisales/${type}`
       : `${backendUrl}/sales/${type}`;
 
-    const response = await axios.get(url, { headers: { token } });
+    const response = await api.get(url, { headers: { token } });
     const rawData = response.data.data;
 
     const formattedData = rawData.map(item => {

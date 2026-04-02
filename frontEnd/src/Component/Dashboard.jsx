@@ -1,5 +1,5 @@
 import { InvoiceContext } from '@/Context/InvoiceContext'
-import axios from 'axios'
+import api from '@/lib/api'
 import React, { useContext, useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import Graph from './Graph'
@@ -44,7 +44,7 @@ const Dashboard = () => {
             try{
                 if(role !=='admin' && role !=='edit'){
                   console.log('hii')
-                const response= await axios.get(`${backendUrl}/getinvoice`,{headers:{token}})
+                const response= await api.get(`${backendUrl}/getinvoice`,{headers:{token}})
                 console.log(response.data)
                     setInvoice(response.data.invoice) 
                 }
@@ -62,7 +62,7 @@ const Dashboard = () => {
       try{
             if(role ==='admin' || userPermission ==='edit'){
               
-           const response= await axios.get(`${backendUrl}/allinvoice`,{headers:{token}})
+           const response= await api.get(`${backendUrl}/allinvoice`,{headers:{token}})
                 console.log(response.data)
                  setInvoice(response.data.invoice) 
             }

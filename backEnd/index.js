@@ -1,37 +1,26 @@
-import express from  'express'
-// import {ConnectCloudinary} from './config/cloudinary.js'
-import {config} from 'dotenv'
-import cors from 'cors'
-import { ConnectDB } from './config/mongoDB.js'
-import { AuthUser } from './middlewere/Auth.js'
-import { authRouter } from './routes/authRoute.js'
-import { defaultItems } from './middlewere/FixedItem.js'
-import {ConnectCloudinary} from './config/claudinary.js'
+import app from "./app.js";
+import { ConnectDB } from "./config/mongoDB.js";
+import { env } from "./config/env.js";
+import { ConnectCloudinary } from "./config/claudinary.js";
+import { defaultItems } from "./middlewere/FixedItem.js";
 
-const app=express()
+const startServer = async () => {
+  try {
+    if (!env.jwtSecret) {
+      throw new Error("JWT_SECRET is not configured");
+    }
 
-config()
-ConnectCloudinary()
+    ConnectCloudinary();
+    await ConnectDB();
+    await defaultItems();
 
-ConnectDB()
+    app.listen(env.port, () => {
+      console.log(`Server running on port ${env.port}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
 
-defaultItems()
-
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
-}))
-
-app.use('/api',authRouter)
-
-app.get('/',(req,res)=>{
-    res.json('landing page is here ')
-})
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT,()=>{
-    console.log(`Server running on port ${PORT}`)
-})
+startServer();

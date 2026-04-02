@@ -1,6 +1,6 @@
 import { assets } from '@/assets/assets'
 import { InvoiceContext } from '@/Context/InvoiceContext'
-import axios from 'axios'
+import api from '@/lib/api'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Skeleton } from "@/components/ui/skeleton"
@@ -44,7 +44,7 @@ const AddCompany = () => {
             return toast.error("all field required")
           }
           setLoading(true)
-            const response=await axios.post(`${backendUrl}/addcompany`,formData,{headers:{token}})
+            const response=await api.post(`${backendUrl}/addcompany`,formData,{headers:{token}})
             console.log(response)
             if(response.data.success === true){
               toast.success("company added successfully ")

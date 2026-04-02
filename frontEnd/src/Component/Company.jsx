@@ -1,6 +1,6 @@
 import { assets } from '@/assets/assets'
 import { InvoiceContext } from '@/Context/InvoiceContext'
-import axios from 'axios'
+import api from '@/lib/api'
 import { Castle, Edit, EllipsisVertical, EllipsisVerticalIcon, Eye, Plus, Search, Trash, Trash2, View } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -36,12 +36,12 @@ const Company = () => {
   const getCompany = async () => {
     try {
       if (role === 'admin' || userPermission === 'edit') {
-        const response = await axios.get(`${backendUrl}/getcompany`, {
+        const response = await api.get(`${backendUrl}/getcompany`, {
           headers: { token },
         })
         if (response.data.success) setCompany(response.data.company)
       } else {
-        const response = await axios.get(`${backendUrl}/statecompany`, {
+        const response = await api.get(`${backendUrl}/statecompany`, {
           headers: { token },
         })
         if (response.data.success) setCompany(response.data.company)
